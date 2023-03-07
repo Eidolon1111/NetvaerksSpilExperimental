@@ -2,9 +2,12 @@ package NetvaerksSpil;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class TCPServer {
-	
+
+
+	private static ArrayList<ServerThread> threads = new ArrayList<>();
 	/**
 	 * @param args
 	 */
@@ -12,8 +15,13 @@ public class TCPServer {
 		ServerSocket welcomeSocket = new ServerSocket(6789);
 		while (true) {
 			Socket connectionSocket = welcomeSocket.accept();
-			(new ServerThread(connectionSocket)).start();
+			ServerThread serverThread = new ServerThread(connectionSocket);
+			threads.add(serverThread);
+			serverThread.start();
 		}
 	}
 
+	public static ArrayList<ServerThread> getThreads(){
+		return new ArrayList<>(threads);
+	}
 }
