@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class TCPServer {
 
-
+	//TODO: Lav et map med create beskeder!
 	private static ArrayList<ServerThread> threads = new ArrayList<>();
 	/**
 	 * @param args

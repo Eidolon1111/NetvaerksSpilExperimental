@@ -137,28 +137,28 @@ public class GUI extends Application {
 
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 				switch (event.getCode()) {
-					case UP:    this.outString = "move 0 -1 up";
+					case UP:    this.outString = "move " + me.name + " 0 -1 up";
 						try {
 							outToServer.writeBytes(outString + '\n');
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
 						break;
-					case DOWN:  this.outString = "move 0 +1 down";
+					case DOWN:  this.outString = "move " + me.name + " 0 +1 down";
 						try {
 							outToServer.writeBytes(outString + '\n');
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
 						break;
-					case LEFT:  this.outString = "move -1 0 left";
+					case LEFT:  this.outString = "move " + me.name + " -1 0 left";
 						try {
 							outToServer.writeBytes(outString + '\n');
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
 						break;
-					case RIGHT: this.outString = "move +1 0 right";
+					case RIGHT: this.outString = "move " + me.name + " +1 0 right";
 						try {
 							outToServer.writeBytes(outString + '\n');
 						} catch (IOException e) {
@@ -175,20 +175,27 @@ public class GUI extends Application {
 		}
 	}
 
-	public void playerMoved(int delta_x, int delta_y, String direction) {
-		me.direction = direction;
-		int x = me.getXpos(),y = me.getYpos();
+	public void playerMoved(String name, int delta_x, int delta_y, String direction) {
+		Player currentPlayer = null;
+		for (Player player : players){
+			if(player.name.equals(name)){
+				currentPlayer = player;
+			}
+		}
+
+		currentPlayer.direction = direction;
+		int x = currentPlayer.getXpos(),y = currentPlayer.getYpos();
 
 		if (board[y+delta_y].charAt(x+delta_x)=='w') {
-			me.addPoints(-1);
+			currentPlayer.addPoints(-1);
 		} 
 		else {
 			Player p = getPlayerAt(x+delta_x,y+delta_y);
 			if (p!=null) {
-              me.addPoints(10);
+              currentPlayer.addPoints(10);
               p.addPoints(-10);
 			} else {
-				me.addPoints(1);
+				currentPlayer.addPoints(1);
 			
 				fields[x][y].setGraphic(new ImageView(image_floor));
 				x+=delta_x;
@@ -207,8 +214,8 @@ public class GUI extends Application {
 					fields[x][y].setGraphic(new ImageView(hero_down));
 				};
 
-				me.setXpos(x);
-				me.setYpos(y);
+				currentPlayer.setXpos(x);
+				currentPlayer.setYpos(y);
 			}
 		}
 		scoreList.setText(getScoreList());
@@ -250,14 +257,12 @@ public class GUI extends Application {
 						me = new Player(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]);
 						players.add(me);
 						Platform.runLater(() -> fields[Integer.parseInt(input[2])][Integer.parseInt(input[3])].setGraphic(new ImageView(hero_up)));
-						//fields[Integer.parseInt(input[2])][Integer.parseInt(input[3])].setGraphic(new ImageView(hero_up));
 					} else if (input[0].equals("create") && me != null){
 						Player player = new Player(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]);
 						players.add(player);
 						Platform.runLater(() -> fields[Integer.parseInt(input[2])][Integer.parseInt(input[3])].setGraphic(new ImageView(hero_up)));
-						//fields[Integer.parseInt(input[2])][Integer.parseInt(input[3])].setGraphic(new ImageView(hero_up));
 					} else if (input[0].equals("move")){
-						Platform.runLater(() -> playerMoved(Integer.parseInt(input[1]), Integer.parseInt(input[2]), input[3]));
+						Platform.runLater(() -> playerMoved(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]));
 					}
 				}
 			} catch (IOException e) {
