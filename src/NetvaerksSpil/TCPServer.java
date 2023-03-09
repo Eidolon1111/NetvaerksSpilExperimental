@@ -24,7 +24,7 @@ public class TCPServer {
 		}
 	}
 
-	public static void updateClients(String outToClients){
+	public static synchronized void updateClients(String outToClients){
 		String temp = outToClients.split(" ")[0].equals("create") ? outToClients : null;
 		if(temp != null){
 			creates.add(temp);
