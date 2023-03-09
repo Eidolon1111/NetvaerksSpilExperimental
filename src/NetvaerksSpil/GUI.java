@@ -118,6 +118,9 @@ public class GUI extends Application {
 						
 			Scene scene = new Scene(grid,scene_width,scene_height);
 			primaryStage.setScene(scene);
+			JoinGameWindow joinGameWindow = new JoinGameWindow();
+			joinGameWindow.showAndWait();
+
 			primaryStage.show();
 
 			Socket clientSocket= new Socket("localhost",6789);
