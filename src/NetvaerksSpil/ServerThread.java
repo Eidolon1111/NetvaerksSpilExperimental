@@ -21,16 +21,11 @@ public class ServerThread extends Thread{
 				BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connSocket.getInputStream()));
 				outToClient = new DataOutputStream(connSocket.getOutputStream());
 				String clientSentence = inFromClient.readLine();
-				//outToClient.writeBytes(clientSentence + '\n' );
-
-				for (ServerThread serverThread : TCPServer.getThreads()){
-					serverThread.writeToClients(clientSentence);
-				}
+				TCPServer.updateClients(clientSentence);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		// do the work here
 	}
 
 	public void writeToClients(String action){
