@@ -8,6 +8,7 @@ public class TCPServer {
 
 	private static ArrayList<ServerThread> serverThreads = new ArrayList<>();
 	private static ArrayList<String> creates = new ArrayList<>();
+	private static ArrayList<String> joins = new ArrayList<>();
 	private static int maxSpillere = 2;
 
 	/**
@@ -48,8 +49,9 @@ public class TCPServer {
 	public static synchronized void updateClients(String outToClients){
 		String temp = outToClients.split(" ")[0].equals("join") ? outToClients : null;
 		if(temp != null){
+			joins.add(temp);
 			for (ServerThread serverThread : serverThreads){
-				serverThread.writeToClients(outToClients);
+				joins.forEach((jm) -> serverThread.writeToClients(jm));
 			}
 		}
 	}
