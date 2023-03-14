@@ -22,8 +22,9 @@ public class JoinGameWindow extends Stage {
     private Label lbName = new Label("Player name: ");
     private TextField txfName = new TextField();
     private Button btnJoin = new Button("Join Game");
-
-    public JoinGameWindow() throws Exception {
+    private DataOutputStream outToServer;
+    public JoinGameWindow(DataOutputStream outToServer) throws Exception {
+        this.outToServer = outToServer;
         initStyle(StageStyle.UTILITY);
         initModality(Modality.APPLICATION_MODAL);
         setResizable(false);
@@ -68,7 +69,7 @@ public class JoinGameWindow extends Stage {
         } else {
             GUI.me = new Player(name, 9, 4, "up");
             GUI.players.add(GUI.me);
-            GUI.outString = "join " + name + " " + GUI.me.xpos + " " + GUI.me.ypos + " " + GUI.me.direction;
+            outToServer.writeBytes("join " + name + " " + GUI.me.xpos + " " + GUI.me.ypos + " " + GUI.me.direction);
             this.close();
         }
     }

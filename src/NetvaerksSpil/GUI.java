@@ -131,10 +131,8 @@ public class GUI extends Application {
 
 //			outString = "create Sebastian 9 4 up";
 
-			lobbyWindow = new LobbyWindow();
+			lobbyWindow = new LobbyWindow(outToServer);
 			lobbyWindow.showAndWait();
-
-			outToServer.writeBytes(outString + '\n');
 
 			primaryStage.show();
 

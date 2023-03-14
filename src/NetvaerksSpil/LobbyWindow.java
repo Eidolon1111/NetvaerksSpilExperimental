@@ -12,6 +12,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LobbyWindow extends Stage {
@@ -19,8 +21,10 @@ public class LobbyWindow extends Stage {
     private Label lbPlayers = new Label("Players: ");
     private ListView<String> lvPlayers = new ListView<>();
     private Button btnReady = new Button("Ready");
+    private DataOutputStream outToServer;
 
-    public LobbyWindow() throws Exception {
+    public LobbyWindow(DataOutputStream outToServer) throws Exception {
+        this.outToServer = outToServer;
         initStyle(StageStyle.UTILITY);
         initModality(Modality.APPLICATION_MODAL);
         setResizable(false);
@@ -33,7 +37,7 @@ public class LobbyWindow extends Stage {
     }
 
     private void init(GridPane pane) throws Exception {
-        JoinGameWindow joinGameWindow = new JoinGameWindow();
+        JoinGameWindow joinGameWindow = new JoinGameWindow(outToServer);
         joinGameWindow.showAndWait();
 
         pane.setMinSize(400, 200);
@@ -47,7 +51,13 @@ public class LobbyWindow extends Stage {
         pane.add(lvPlayers, 0, 1);
         update();
         pane.add(btnReady, 0, 2);
-        btnReady.setOnAction(event -> readyAction());
+        btnReady.setOnAction(event -> {
+            try {
+                readyAction();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
     }
 
@@ -56,9 +66,9 @@ public class LobbyWindow extends Stage {
         GUI.players.forEach(p -> lvPlayers.getItems().add(p.getLobbyString()));
     }
 
-    private void readyAction(){
+    private void readyAction() throws IOException {
         GUI.me.setReady(true);
-        GUI.outString = "ready " + GUI.me.getName();
+        outToServer.writeBytes("ready " + GUI.me.getName());
         btnReady.setDisable(true);
         update();
     }
