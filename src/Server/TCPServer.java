@@ -23,7 +23,7 @@ public class TCPServer {
 		}
 	}
 
-	public static synchronized void updateClients(String outToClients){
+	public static synchronized void updateClients1(String outToClients){
 		String temp = outToClients.split(" ")[0].equals("create") ? outToClients : null;
 		if(temp != null){
 			creates.add(temp);
@@ -45,7 +45,12 @@ public class TCPServer {
 	}
 
 	//TODO
-	public static synchronized void updateClients1(String outToClients){
-
+	public static synchronized void updateClients(String outToClients){
+		String temp = outToClients.split(" ")[0].equals("join") ? outToClients : null;
+		if(temp != null){
+			for (ServerThread serverThread : serverThreads){
+				serverThread.writeToClients(outToClients);
+			}
+		}
 	}
 }
