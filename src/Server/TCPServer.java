@@ -9,7 +9,6 @@ public class TCPServer {
 	private static ArrayList<ServerThread> serverThreads = new ArrayList<>();
 	private static ArrayList<String> joins = new ArrayList<>();
 	private static ArrayList<String> readys = new ArrayList<>();
-	private static int maxSpillere = 2;
 	private static boolean launched = false;
 
 	/**
