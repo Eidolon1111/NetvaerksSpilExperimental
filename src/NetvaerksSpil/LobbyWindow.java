@@ -68,7 +68,7 @@ public class LobbyWindow extends Stage {
 
     private void readyAction() throws IOException {
         GUI.me.setReady(true);
-        outToServer.writeBytes("ready " + GUI.me.getName());
+        outToServer.writeBytes("ready " + GUI.me.getName() + '\n');
         btnReady.setDisable(true);
         update();
     }

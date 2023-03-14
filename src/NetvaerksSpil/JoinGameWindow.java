@@ -69,7 +69,7 @@ public class JoinGameWindow extends Stage {
         } else {
             GUI.me = new Player(name, 9, 4, "up");
             GUI.players.add(GUI.me);
-            outToServer.writeBytes("join " + name + " " + GUI.me.xpos + " " + GUI.me.ypos + " " + GUI.me.direction);
+            outToServer.writeBytes("join " + name + " " + GUI.me.xpos + " " + GUI.me.ypos + " " + GUI.me.direction + '\n');
             this.close();
         }
     }
