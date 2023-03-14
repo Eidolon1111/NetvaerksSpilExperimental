@@ -265,17 +265,18 @@ public class GUI extends Application {
 						players.add(player);
 						//Platform.runLater(() -> fields[Integer.parseInt(input[2])][Integer.parseInt(input[3])].setGraphic(new ImageView(hero_up)));
 						Platform.runLater(() -> lobbyWindow.update());
-					} else if (input[0].equals("ready")){
+					} else if (input[0].equals("ready") && !input[1].equals(me.name)){
 						String name = input[1];
 						for (Player p : players){
 							if(p.name.equals(name)){
 								p.setReady(true);
 							}
 						}
-						lobbyWindow.update();
+						Platform.runLater(() -> lobbyWindow.update());
 					} else if (input[0].equals("move")){
 						Platform.runLater(() -> playerMoved(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]));
 					}
+					//Platform.runLater(() -> lobbyWindow.update());
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
