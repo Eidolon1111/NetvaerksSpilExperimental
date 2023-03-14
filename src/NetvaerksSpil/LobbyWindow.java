@@ -51,7 +51,7 @@ public class LobbyWindow extends Stage {
 
     }
 
-    private void update(){
+    public void update(){
         lvPlayers.getItems().clear();
         GUI.players.forEach(p -> lvPlayers.getItems().add(p.getLobbyString()));
     }

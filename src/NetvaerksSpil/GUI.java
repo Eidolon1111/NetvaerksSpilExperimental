@@ -36,6 +36,7 @@ public class GUI extends Application {
 	private TextArea scoreList;
 
 	public static String outString;
+	private LobbyWindow lobbyWindow;
 	
 	private  String[] board = {    // 20x20
 			"wwwwwwwwwwwwwwwwwwww",
@@ -130,7 +131,7 @@ public class GUI extends Application {
 
 //			outString = "create Sebastian 9 4 up";
 
-			LobbyWindow lobbyWindow = new LobbyWindow();
+			lobbyWindow = new LobbyWindow();
 			lobbyWindow.showAndWait();
 
 			outToServer.writeBytes(outString + '\n');
@@ -264,7 +265,8 @@ public class GUI extends Application {
 					if (input[0].equals("join") && me != null){
 						Player player = new Player(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]);
 						players.add(player);
-						Platform.runLater(() -> fields[Integer.parseInt(input[2])][Integer.parseInt(input[3])].setGraphic(new ImageView(hero_up)));
+						//Platform.runLater(() -> fields[Integer.parseInt(input[2])][Integer.parseInt(input[3])].setGraphic(new ImageView(hero_up)));
+						lobbyWindow.update();
 					} else if (input[0].equals("move")){
 						Platform.runLater(() -> playerMoved(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]));
 					}
