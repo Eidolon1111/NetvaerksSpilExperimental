@@ -43,4 +43,9 @@ public class TCPServer {
 			}
 		}
 	}
+
+	//TODO
+	public static synchronized void updateClients1(String outToClients){
+
+	}
 }

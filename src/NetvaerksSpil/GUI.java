@@ -35,7 +35,7 @@ public class GUI extends Application {
 	private Label[][] fields;
 	private TextArea scoreList;
 
-	private String outString;
+	public static String outString;
 	
 	private  String[] board = {    // 20x20
 			"wwwwwwwwwwwwwwwwwwww",
@@ -118,10 +118,9 @@ public class GUI extends Application {
 						
 			Scene scene = new Scene(grid,scene_width,scene_height);
 			primaryStage.setScene(scene);
-			JoinGameWindow joinGameWindow = new JoinGameWindow();
-			joinGameWindow.showAndWait();
 
-			primaryStage.show();
+			//TODO Field dit spiller objekt
+			//fields[Integer.parseInt(input[2])][Integer.parseInt(input[3])].setGraphic(new ImageView(hero_up)));
 
 			Socket clientSocket= new Socket("localhost",6789);
 			DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
@@ -129,8 +128,14 @@ public class GUI extends Application {
 			ClientReadThread clientReadThread = new ClientReadThread(inFromServer);
 			clientReadThread.start();
 
-			outString = "create Sebastian 9 4 up";
+//			outString = "create Sebastian 9 4 up";
+
+			LobbyWindow lobbyWindow = new LobbyWindow();
+			lobbyWindow.showAndWait();
+
 			outToServer.writeBytes(outString + '\n');
+
+			primaryStage.show();
 
 
 
@@ -256,11 +261,7 @@ public class GUI extends Application {
 					inString = inFromServer.readLine();
 					System.out.println("FROM SERVER: " + inString);
 					String[] input = inString.split(" ");
-					if(input[0].equals("create") && me == null) {
-						me = new Player(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]);
-						players.add(me);
-						Platform.runLater(() -> fields[Integer.parseInt(input[2])][Integer.parseInt(input[3])].setGraphic(new ImageView(hero_up)));
-					} else if (input[0].equals("create") && me != null){
+					if (input[0].equals("join") && me != null){
 						Player player = new Player(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]);
 						players.add(player);
 						Platform.runLater(() -> fields[Integer.parseInt(input[2])][Integer.parseInt(input[3])].setGraphic(new ImageView(hero_up)));
@@ -271,6 +272,8 @@ public class GUI extends Application {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
+
 
 
 		}

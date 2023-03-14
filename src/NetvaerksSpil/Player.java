@@ -6,6 +6,7 @@ public class Player {
 	int ypos;
 	int point;
 	String direction;
+	boolean ready;
 
 	public Player(String name, int xpos, int ypos, String direction) {
 		this.name = name;
@@ -13,6 +14,7 @@ public class Player {
 		this.ypos = ypos;
 		this.direction = direction;
 		this.point = 0;
+		this.ready = false;
 	}
 
 	public int getXpos() {
@@ -39,4 +41,17 @@ public class Player {
 	public String toString() {
 		return name+":   "+point;
 	}
+
+	public String getName(){
+		return this.name;
+	}
+
+	public void setReady(boolean ready){
+		this.ready = ready;
+	}
+
+	public String getLobbyString(){
+		return name + ": " + (ready ?  "ready" : "not ready");
+	}
+
 }
