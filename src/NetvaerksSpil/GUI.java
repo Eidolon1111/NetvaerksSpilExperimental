@@ -258,7 +258,7 @@ public class GUI extends Application {
 			try {
 				while (true){
 					inString = inFromServer.readLine();
-					System.out.println("FROM SERVER: " + inString);
+					//System.out.println("FROM SERVER: " + inString);
 					String[] input = inString.split(" ");
 					if (input[0].equals("join") && me != null && !input[1].equals(me.name)) {
 						boolean found = false;
@@ -284,7 +284,12 @@ public class GUI extends Application {
 					} else if (input[0].equals("move")){
 						Platform.runLater(() -> playerMoved(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]));
 					}
-					//Platform.runLater(() -> lobbyWindow.update());
+					if(input[0].equals("launch")){
+						for (Player player : players){
+							Platform.runLater(() -> fields[player.getXpos()][player.getYpos()].setGraphic(new ImageView(hero_up)));
+						}
+						Platform.runLater(() -> lobbyWindow.close());
+					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();

@@ -10,6 +10,7 @@ public class TCPServer {
 	private static ArrayList<String> joins = new ArrayList<>();
 	private static ArrayList<String> readys = new ArrayList<>();
 	private static int maxSpillere = 2;
+	private static boolean launched = false;
 
 	/**
 	 * @param args
@@ -45,25 +46,36 @@ public class TCPServer {
 //		}
 //	}
 
-	//TODO
 	public static synchronized void updateClients(String outToClients){
 		String command = outToClients.split(" ")[0];
-		if(command.equals("join")){
-			if (!joins.contains(outToClients)){
-				joins.add(outToClients);
+		if(!launched){
+			if(command.equals("join")){
+				if (!joins.contains(outToClients)){
+					joins.add(outToClients);
+				}
+				for (ServerThread serverThread : serverThreads){
+					joins.forEach((jm) -> serverThread.writeToClients(jm));
+				}
 			}
-			for (ServerThread serverThread : serverThreads){
-				joins.forEach((jm) -> serverThread.writeToClients(jm));
+			if(command.equals("ready")){
+				if (!readys.contains(outToClients)){
+					readys.add(outToClients);
+				}
+				for (ServerThread serverThread : serverThreads){
+					readys.forEach((rm) -> serverThread.writeToClients(rm));
+				}
+			}
+			if(readys.size() == serverThreads.size()){
+				for (ServerThread serverThread : serverThreads){
+					serverThread.writeToClients("launch" + "\n");
+				}
+				launched = true;
 			}
 		}
-		if(command.equals("ready")){
-			if (!readys.contains(outToClients)){
-				readys.add(outToClients);
-			}
-			for (ServerThread serverThread : serverThreads){
-				readys.forEach((rm) -> serverThread.writeToClients(rm));
-			}
+		for (ServerThread serverThread : serverThreads){
+				serverThread.writeToClients(outToClients);
 		}
+
 
 	}
 }
