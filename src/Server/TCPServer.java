@@ -49,7 +49,9 @@ public class TCPServer {
 	public static synchronized void updateClients(String outToClients){
 		String temp = outToClients.split(" ")[0].equals("join") ? outToClients : null;
 		if(temp != null){
-			joins.add(temp);
+			if (!joins.contains(temp)){
+				joins.add(temp);
+			}
 			for (ServerThread serverThread : serverThreads){
 				joins.forEach((jm) -> serverThread.writeToClients(jm));
 			}

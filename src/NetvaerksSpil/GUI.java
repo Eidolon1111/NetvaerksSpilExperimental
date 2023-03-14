@@ -264,7 +264,7 @@ public class GUI extends Application {
 						Player player = new Player(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]);
 						players.add(player);
 						//Platform.runLater(() -> fields[Integer.parseInt(input[2])][Integer.parseInt(input[3])].setGraphic(new ImageView(hero_up)));
-						lobbyWindow.update();
+						Platform.runLater(() ->lobbyWindow.update());
 					} else if (input[0].equals("move")){
 						Platform.runLater(() -> playerMoved(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]));
 					}
