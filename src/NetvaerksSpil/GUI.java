@@ -262,7 +262,9 @@ public class GUI extends Application {
 					String[] input = inString.split(" ");
 					if (input[0].equals("join") && me != null && !input[1].equals(me.name)) {
 						Player player = new Player(input[1], Integer.parseInt(input[2]), Integer.parseInt(input[3]), input[4]);
-						players.add(player);
+						if(!players.contains(player)){
+							players.add(player);
+						}
 						//Platform.runLater(() -> fields[Integer.parseInt(input[2])][Integer.parseInt(input[3])].setGraphic(new ImageView(hero_up)));
 						Platform.runLater(() -> lobbyWindow.update());
 					} else if (input[0].equals("ready") && !input[1].equals(me.name)){
