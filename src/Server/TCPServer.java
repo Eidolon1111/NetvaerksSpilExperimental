@@ -24,27 +24,6 @@ public class TCPServer {
 		}
 	}
 
-//	public static synchronized void updateClients1(String outToClients){
-//		String temp = outToClients.split(" ")[0].equals("create") ? outToClients : null;
-//		if(temp != null){
-//			creates.add(temp);
-//			if (creates.size() == maxSpillere) {
-//				for (ServerThread serverThread : serverThreads){
-//					serverThread.writeToClients(creates.get(serverThreads.indexOf(serverThread)));
-//					for (String s : creates){
-//						if(serverThreads.indexOf(serverThread) != creates.indexOf(s)){
-//							serverThread.writeToClients(s);
-//						}
-//					}
-//				}
-//			}
-//		} else {
-//			for (ServerThread serverThread : serverThreads){
-//				serverThread.writeToClients(outToClients);
-//			}
-//		}
-//	}
-
 	public static synchronized void updateClients(String outToClients){
 		String command = outToClients.split(" ")[0];
 		if(!launched){
