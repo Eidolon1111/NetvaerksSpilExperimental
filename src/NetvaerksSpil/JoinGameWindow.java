@@ -67,7 +67,7 @@ public class JoinGameWindow extends Stage {
         if(taken){
             new Alert(Alert.AlertType.WARNING, "Name taken!");
         } else {
-            GUI.me = new Player(name, 9, 4, "up");
+            GUI.me = new Player(name, 1, 1, "up");
             GUI.players.add(GUI.me);
             outToServer.writeBytes("join " + name + " " + GUI.me.xpos + " " + GUI.me.ypos + " " + GUI.me.direction + '\n');
             this.close();
