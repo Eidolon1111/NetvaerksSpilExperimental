@@ -9,7 +9,7 @@ public class TCPServer {
 	private static ArrayList<ServerThread> serverThreads = new ArrayList<>();
 	private static ArrayList<String> joins = new ArrayList<>();
 	private static ArrayList<String> readys = new ArrayList<>();
-	private static String[] spawns = {"1 1", "18 1", "1 18", "18 18"};
+	//private static String[] spawns = {"1 1", "18 1", "1 18", "18 18"};
 	private static boolean launched = false;
 
 	/**
@@ -45,9 +45,9 @@ public class TCPServer {
 				}
 			}
 			if(readys.size() == serverThreads.size()){
-				for (int i = 0; i < serverThreads.size(); i++) {
-					serverThreads.get(i).writeToClients("launch " + spawns[i]);
-				}
+//				for (int i = 0; i < serverThreads.size(); i++) {
+//					serverThreads.get(i).writeToClients("launch " + spawns[i]);
+//				}
 
 				for (ServerThread serverThread : serverThreads){
 					serverThread.writeToClients("launch" + "\n");

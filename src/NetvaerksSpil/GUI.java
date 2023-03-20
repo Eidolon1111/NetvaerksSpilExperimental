@@ -286,8 +286,8 @@ public class GUI extends Application {
 					}
 					if(input[0].equals("launch")){
 						for (Player player : players){
-							player.setXpos(Integer.parseInt(input[1]));
-							player.setYpos(Integer.parseInt(input[2]));
+//							player.setXpos(Integer.parseInt(input[1]));
+//							player.setYpos(Integer.parseInt(input[2]));
 							Platform.runLater(() -> fields[player.getXpos()][player.getYpos()].setGraphic(new ImageView(hero_up)));
 						}
 						Platform.runLater(() -> lobbyWindow.close());
